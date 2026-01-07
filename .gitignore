@@ -1,0 +1,12 @@
+build/
+*.o
+*.so
+*.a
+*.vala.c
+*.h
+*.vapi
+*.stamp
+compile_commands.json
+.vscode/
+.idea/
+

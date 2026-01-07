@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.javaide'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_22
+    targetCompatibility = JavaVersion.VERSION_22
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // No external dependencies - using standard Java libraries
+}
+
+application {
+    mainClass = 'com.javaide.JavaIDE'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.javaide.JavaIDE'
+    }
+    archiveBaseName = 'javaide'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
