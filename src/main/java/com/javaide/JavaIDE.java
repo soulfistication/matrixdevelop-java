@@ -178,7 +178,7 @@ public class JavaIDE extends JFrame {
         JToolBar toolbar = new JToolBar();
         toolbar.setFloatable(false);
         
-        JButton newBtn = new JButton(new ImageIcon(getClass().getResource("/icons/new.png")));
+        JButton newBtn = new JButton();
         if (newBtn.getIcon() == null) {
             newBtn.setText("New");
         }
@@ -186,7 +186,7 @@ public class JavaIDE extends JFrame {
         newBtn.addActionListener(e -> onNewFile());
         toolbar.add(newBtn);
         
-        JButton openBtn = new JButton(new ImageIcon(getClass().getResource("/icons/open.png")));
+        JButton openBtn = new JButton();
         if (openBtn.getIcon() == null) {
             openBtn.setText("Open");
         }
@@ -194,7 +194,7 @@ public class JavaIDE extends JFrame {
         openBtn.addActionListener(e -> onOpenFile());
         toolbar.add(openBtn);
         
-        JButton saveBtn = new JButton(new ImageIcon(getClass().getResource("/icons/save.png")));
+        JButton saveBtn = new JButton();
         if (saveBtn.getIcon() == null) {
             saveBtn.setText("Save");
         }
@@ -204,7 +204,7 @@ public class JavaIDE extends JFrame {
         
         toolbar.addSeparator();
         
-        JButton buildBtn = new JButton(new ImageIcon(getClass().getResource("/icons/build.png")));
+        JButton buildBtn = new JButton();
         if (buildBtn.getIcon() == null) {
             buildBtn.setText("Build");
         }
@@ -212,7 +212,7 @@ public class JavaIDE extends JFrame {
         buildBtn.addActionListener(e -> onBuild());
         toolbar.add(buildBtn);
         
-        JButton runBtn = new JButton(new ImageIcon(getClass().getResource("/icons/run.png")));
+        JButton runBtn = new JButton();
         if (runBtn.getIcon() == null) {
             runBtn.setText("Run");
         }
