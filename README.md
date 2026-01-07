@@ -1,6 +1,6 @@
 # JavaIDE
 
-A modern Java IDE built with Swing and Java 22.
+A modern Java IDE built with Swing and Java 21.
 
 ## Features
 
@@ -14,7 +14,7 @@ A modern Java IDE built with Swing and Java 22.
 
 ## Requirements
 
-- Java 22 or later (JDK)
+- Java 21 or later (JDK)
 - Maven 3.6+ (optional, for Maven projects)
 - No external dependencies - uses only standard Java libraries
 
@@ -45,7 +45,7 @@ java -jar target/javaide-1.0.0.jar
 
 ### System Requirements
 
-- **Java 22 JDK**: Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.org/)
+- **Java 21 JDK**: Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.org/)
 - **Maven** (optional): Download from [Maven website](https://maven.apache.org/download.cgi)
 
 ### Platform-Specific Installation
@@ -53,9 +53,9 @@ java -jar target/javaide-1.0.0.jar
 #### Linux
 
 ```bash
-# Install Java 22
-sudo apt-get install openjdk-22-jdk  # Ubuntu/Debian
-sudo dnf install java-22-openjdk-devel  # Fedora/RHEL
+# Install Java 21
+sudo apt-get install openjdk-21-jdk  # Ubuntu/Debian
+sudo dnf install java-21-openjdk-devel  # Fedora/RHEL
 sudo pacman -S jdk-openjdk  # Arch Linux
 
 # Install Maven (optional)
@@ -66,8 +66,8 @@ sudo dnf install maven  # Fedora/RHEL
 #### macOS
 
 ```bash
-# Install Java 22 using Homebrew
-brew install openjdk@22
+# Install Java 21 using Homebrew
+brew install openjdk@21
 
 # Install Maven (optional)
 brew install maven
@@ -75,7 +75,7 @@ brew install maven
 
 #### Windows
 
-1. Download and install Java 22 JDK from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [Adoptium](https://adoptium.net/)
+1. Download and install Java 21 JDK from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [Adoptium](https://adoptium.net/)
 2. Download and install Maven from [Maven website](https://maven.apache.org/download.cgi)
 3. Add Java and Maven to your PATH environment variable
 
@@ -130,13 +130,13 @@ java -jar target/javaide-1.0.0.jar
 
 ### Error: Java version not supported
 
-Make sure you have Java 22 installed:
+Make sure you have Java 21 installed:
 
 ```bash
 java -version
 ```
 
-Should show version 22 or higher. If not, install Java 22 JDK.
+Should show version 21 or higher. If not, install Java 21 JDK.
 
 ### Error: Maven not found
 
@@ -158,8 +158,8 @@ mvn clean compile
 
 If you encounter compilation errors, ensure:
 
-1. Java 22 JDK is installed and `JAVA_HOME` is set correctly
-2. Maven is using Java 22 (check with `mvn -version`)
+1. Java 21 JDK is installed and `JAVA_HOME` is set correctly
+2. Maven is using Java 21 (check with `mvn -version`)
 3. All source files are in `src/main/java/com/javaide/`
 
 ## Running
