@@ -1,8 +1,18 @@
 package com.javaide;
 
-import javax.swing.*;
-import javax.swing.text.*;
-import java.awt.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JOptionPane;
+import javax.swing.undo.UndoManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyleContext;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import java.awt.Font;
+import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,7 +38,7 @@ public class EditorTab {
         
         // Configure editor
         textPane.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
-        textPane.setTabSize(4);
+        //textPane.setTabSize(4);
         
         // Set up undo manager
         undoManager = new UndoManager();

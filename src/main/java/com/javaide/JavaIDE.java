@@ -342,7 +342,8 @@ public class JavaIDE extends JFrame {
         tabPanel.add(tabLabel, BorderLayout.CENTER);
         tabPanel.add(closeBtn, BorderLayout.EAST);
         
-        int index = editorNotebook.addTab(label, tab.scrollPane);
+        editorNotebook.addTab(label, tab.scrollPane);
+	int index = 1;
         editorNotebook.setTabComponentAt(index, tabPanel);
         editorNotebook.setSelectedIndex(index);
         
