@@ -515,8 +515,8 @@ public class JavaIDE extends JFrame {
                 "    <artifactId>myproject</artifactId>\n" +
                 "    <version>1.0-SNAPSHOT</version>\n\n" +
                 "    <properties>\n" +
-                "        <maven.compiler.source>21</maven.compiler.source>\n" +
-                "        <maven.compiler.target>21</maven.compiler.target>\n" +
+                "        <maven.compiler.source>25</maven.compiler.source>\n" +
+                "        <maven.compiler.target>25</maven.compiler.target>\n" +
                 "        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n" +
                 "    </properties>\n" +
                 "</project>\n";
