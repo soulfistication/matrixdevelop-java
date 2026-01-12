@@ -1,22 +1,22 @@
 .PHONY: all clean compile run package install
 
-# Maven wrapper
-MVN = mvn
+# Ant wrapper
+ANT = ant
 
 all: compile
 
 compile:
-	$(MVN) compile
+	$(ANT) compile
 
 run: compile
-	$(MVN) exec:java -Dexec.mainClass="com.javaide.JavaIDE"
+	$(ANT) run
 
 package:
-	$(MVN) package
+	$(ANT) jar
 
 install: package
-	@echo "JavaIDE JAR created in target/javaide-1.0.0.jar"
-	@echo "Run with: java -jar target/javaide-1.0.0.jar"
+	@echo "JavaIDE JAR created in build/jar/javaide.jar"
+	@echo "Run with: java -jar build/jar/javaide.jar"
 
 clean:
-	$(MVN) clean
+	$(ANT) clean

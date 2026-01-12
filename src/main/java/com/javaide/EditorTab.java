@@ -13,9 +13,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.Font;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * EditorTab represents a single editor tab with syntax highlighting
@@ -99,8 +99,11 @@ public class EditorTab {
             return false;
         }
         
+        FileOutputStream fos = null;
         try {
-            Files.write(Paths.get(filepath), getText().getBytes());
+            File file = new File(filepath);
+            fos = new FileOutputStream(file);
+            fos.write(getText().getBytes("UTF-8"));
             isModified = false;
             return true;
         } catch (IOException e) {
@@ -109,6 +112,14 @@ public class EditorTab {
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             return false;
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
+            }
         }
     }
     

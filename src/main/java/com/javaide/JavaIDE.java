@@ -2,8 +2,6 @@ package com.javaide;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,9 +11,8 @@ import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,40 +63,75 @@ public class JavaIDE extends JFrame {
         
         JMenuItem newFileItem = new JMenuItem("New File", KeyEvent.VK_N);
         newFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-        newFileItem.addActionListener(e -> onNewFile());
+        newFileItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onNewFile();
+            }
+        });
         fileMenu.add(newFileItem);
         
         JMenuItem openFileItem = new JMenuItem("Open File", KeyEvent.VK_O);
         openFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
-        openFileItem.addActionListener(e -> onOpenFile());
+        openFileItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onOpenFile();
+            }
+        });
         fileMenu.add(openFileItem);
         
         JMenuItem saveFileItem = new JMenuItem("Save File", KeyEvent.VK_S);
         saveFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
-        saveFileItem.addActionListener(e -> onSaveFile());
+        saveFileItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSaveFile();
+            }
+        });
         fileMenu.add(saveFileItem);
         
         JMenuItem saveAsItem = new JMenuItem("Save As...");
         saveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, 
             InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        saveAsItem.addActionListener(e -> onSaveAs());
+        saveAsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSaveAs();
+            }
+        });
         fileMenu.add(saveAsItem);
         
         fileMenu.addSeparator();
         
         JMenuItem openProjectItem = new JMenuItem("Open Project");
-        openProjectItem.addActionListener(e -> onOpenProject());
+        openProjectItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onOpenProject();
+            }
+        });
         fileMenu.add(openProjectItem);
         
         JMenuItem newProjectItem = new JMenuItem("New Project");
-        newProjectItem.addActionListener(e -> onNewProject());
+        newProjectItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onNewProject();
+            }
+        });
         fileMenu.add(newProjectItem);
         
         fileMenu.addSeparator();
         
         JMenuItem quitItem = new JMenuItem("Quit", KeyEvent.VK_Q);
         quitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
-        quitItem.addActionListener(e -> System.exit(0));
+        quitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         fileMenu.add(quitItem);
         
         menuBar.add(fileMenu);
@@ -110,30 +142,55 @@ public class JavaIDE extends JFrame {
         
         JMenuItem undoItem = new JMenuItem("Undo", KeyEvent.VK_Z);
         undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
-        undoItem.addActionListener(e -> onUndo());
+        undoItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onUndo();
+            }
+        });
         editMenu.add(undoItem);
         
         JMenuItem redoItem = new JMenuItem("Redo");
         redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, 
             InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK));
-        redoItem.addActionListener(e -> onRedo());
+        redoItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRedo();
+            }
+        });
         editMenu.add(redoItem);
         
         editMenu.addSeparator();
         
         JMenuItem cutItem = new JMenuItem("Cut", KeyEvent.VK_X);
         cutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
-        cutItem.addActionListener(e -> onCut());
+        cutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onCut();
+            }
+        });
         editMenu.add(cutItem);
         
         JMenuItem copyItem = new JMenuItem("Copy", KeyEvent.VK_C);
         copyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
-        copyItem.addActionListener(e -> onCopy());
+        copyItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onCopy();
+            }
+        });
         editMenu.add(copyItem);
         
         JMenuItem pasteItem = new JMenuItem("Paste", KeyEvent.VK_V);
         pasteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
-        pasteItem.addActionListener(e -> onPaste());
+        pasteItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onPaste();
+            }
+        });
         editMenu.add(pasteItem);
         
         menuBar.add(editMenu);
@@ -143,16 +200,31 @@ public class JavaIDE extends JFrame {
         buildMenu.setMnemonic(KeyEvent.VK_B);
         
         JMenuItem buildItem = new JMenuItem("Build Project");
-        buildItem.addActionListener(e -> onBuild());
+        buildItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onBuild();
+            }
+        });
         buildMenu.add(buildItem);
         
         JMenuItem runItem = new JMenuItem("Run");
         runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
-        runItem.addActionListener(e -> onRun());
+        runItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRun();
+            }
+        });
         buildMenu.add(runItem);
         
         JMenuItem cleanItem = new JMenuItem("Clean");
-        cleanItem.addActionListener(e -> onClean());
+        cleanItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onClean();
+            }
+        });
         buildMenu.add(cleanItem);
         
         menuBar.add(buildMenu);
@@ -162,11 +234,21 @@ public class JavaIDE extends JFrame {
         viewMenu.setMnemonic(KeyEvent.VK_V);
         
         JMenuItem toggleFileBrowserItem = new JMenuItem("Toggle File Browser");
-        toggleFileBrowserItem.addActionListener(e -> onToggleFileBrowser());
+        toggleFileBrowserItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onToggleFileBrowser();
+            }
+        });
         viewMenu.add(toggleFileBrowserItem);
         
         JMenuItem toggleOutputItem = new JMenuItem("Toggle Output");
-        toggleOutputItem.addActionListener(e -> onToggleOutput());
+        toggleOutputItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onToggleOutput();
+            }
+        });
         viewMenu.add(toggleOutputItem);
         
         menuBar.add(viewMenu);
@@ -183,7 +265,12 @@ public class JavaIDE extends JFrame {
             newBtn.setText("New");
         }
         newBtn.setToolTipText("New File");
-        newBtn.addActionListener(e -> onNewFile());
+        newBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onNewFile();
+            }
+        });
         toolbar.add(newBtn);
         
         JButton openBtn = new JButton();
@@ -191,7 +278,12 @@ public class JavaIDE extends JFrame {
             openBtn.setText("Open");
         }
         openBtn.setToolTipText("Open File");
-        openBtn.addActionListener(e -> onOpenFile());
+        openBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onOpenFile();
+            }
+        });
         toolbar.add(openBtn);
         
         JButton saveBtn = new JButton();
@@ -199,7 +291,12 @@ public class JavaIDE extends JFrame {
             saveBtn.setText("Save");
         }
         saveBtn.setToolTipText("Save File");
-        saveBtn.addActionListener(e -> onSaveFile());
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSaveFile();
+            }
+        });
         toolbar.add(saveBtn);
         
         toolbar.addSeparator();
@@ -209,7 +306,12 @@ public class JavaIDE extends JFrame {
             buildBtn.setText("Build");
         }
         buildBtn.setToolTipText("Build Project");
-        buildBtn.addActionListener(e -> onBuild());
+        buildBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onBuild();
+            }
+        });
         toolbar.add(buildBtn);
         
         JButton runBtn = new JButton();
@@ -217,7 +319,12 @@ public class JavaIDE extends JFrame {
             runBtn.setText("Run");
         }
         runBtn.setToolTipText("Run");
-        runBtn.addActionListener(e -> onRun());
+        runBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRun();
+            }
+        });
         toolbar.add(runBtn);
         
         add(toolbar, BorderLayout.NORTH);
@@ -287,39 +394,51 @@ public class JavaIDE extends JFrame {
     }
     
     private void loadProjectTree(String path) {
-        Path projectPath = Paths.get(path);
-        String projectName = projectPath.getFileName().toString();
+        File projectPath = new File(path);
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(new FileInfo(path, false));
         treeModel.setRoot(root);
         loadDirectory(root, projectPath);
         fileTree.expandPath(new TreePath(root.getPath()));
     }
     
-    private void loadDirectory(DefaultMutableTreeNode parent, Path dirPath) {
+    private void loadDirectory(DefaultMutableTreeNode parent, File dirPath) {
         try {
-            Files.list(dirPath).sorted().forEach(filePath -> {
-                if (filePath.getFileName().toString().startsWith(".")) {
-                    return;
+            File[] files = dirPath.listFiles();
+            if (files == null) {
+                return;
+            }
+            
+            // Sort files
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File f1, File f2) {
+                    return f1.getName().compareTo(f2.getName());
+                }
+            });
+            
+            for (File file : files) {
+                if (file.getName().startsWith(".")) {
+                    continue;
                 }
                 
-                FileInfo info = new FileInfo(filePath.toString(), Files.isRegularFile(filePath));
+                FileInfo info = new FileInfo(file.getAbsolutePath(), file.isFile());
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(info);
                 parent.add(node);
                 
-                if (Files.isDirectory(filePath)) {
-                    loadDirectory(node, filePath);
+                if (file.isDirectory()) {
+                    loadDirectory(node, file);
                 }
-            });
-        } catch (IOException e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     private void onFileSelected(String filepath) {
-        Path filePath = Paths.get(filepath);
-        if (Files.isRegularFile(filePath)) {
+        File filePath = new File(filepath);
+        if (filePath.isFile()) {
             try {
-                String contents = new String(Files.readAllBytes(filePath));
+                String contents = readFile(filePath);
                 openEditorTab(filepath, contents);
             } catch (IOException e) {
                 showError("Error opening file: " + e.getMessage());
@@ -330,20 +449,25 @@ public class JavaIDE extends JFrame {
     private void openEditorTab(String filepath, String contents) {
         EditorTab tab = new EditorTab(filepath, contents);
         
-        String label = filepath != null ? Paths.get(filepath).getFileName().toString() : "Untitled";
+        String label = filepath != null ? new File(filepath).getName() : "Untitled";
         
         JPanel tabPanel = new JPanel(new BorderLayout());
         JLabel tabLabel = new JLabel(label);
         JButton closeBtn = new JButton("×");
         closeBtn.setBorder(new EmptyBorder(0, 5, 0, 0));
         closeBtn.setContentAreaFilled(false);
-        closeBtn.addActionListener(e -> closeTab(tab.scrollPane));
+        closeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeTab(tab.scrollPane);
+            }
+        });
         
         tabPanel.add(tabLabel, BorderLayout.CENTER);
         tabPanel.add(closeBtn, BorderLayout.EAST);
         
         editorNotebook.addTab(label, tab.scrollPane);
-	int index = 1;
+        int index = editorNotebook.getTabCount() - 1;
         editorNotebook.setTabComponentAt(index, tabPanel);
         editorNotebook.setSelectedIndex(index);
         
@@ -378,6 +502,52 @@ public class JavaIDE extends JFrame {
     
     private void showInfo(String message) {
         JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private String readFile(File file) throws IOException {
+        FileInputStream fis = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            fis = new FileInputStream(file);
+            baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return new String(baos.toByteArray(), "UTF-8");
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
+            }
+            if (baos != null) {
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
+            }
+        }
+    }
+    
+    private void writeFile(File file, String content) throws IOException {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            fos.write(content.getBytes("UTF-8"));
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
+            }
+        }
     }
     
     private void runCommand(String[] command, String workingDir) {
@@ -421,7 +591,7 @@ public class JavaIDE extends JFrame {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             try {
-                String contents = new String(Files.readAllBytes(file.toPath()));
+                String contents = readFile(file);
                 openEditorTab(file.getAbsolutePath(), contents);
             } catch (IOException e) {
                 showError("Error opening file: " + e.getMessage());
@@ -458,7 +628,7 @@ public class JavaIDE extends JFrame {
             // Update tab title
             int index = editorNotebook.getSelectedIndex();
             if (index >= 0) {
-                editorNotebook.setTitleAt(index, Paths.get(tab.filepath).getFileName().toString());
+                editorNotebook.setTitleAt(index, new File(tab.filepath).getName());
             }
         }
     }
@@ -492,49 +662,56 @@ public class JavaIDE extends JFrame {
     private void createNewProject(String path) {
         try {
             // Create src/main/java structure
-            Path srcPath = Paths.get(path, "src", "main", "java");
-            Files.createDirectories(srcPath);
+            File srcPath = new File(path, "src/main/java");
+            srcPath.mkdirs();
             
             // Create Main.java
-            Files.createDirectories(srcPath.resolve("com/example"));
+            File exampleDir = new File(srcPath, "com/example");
+            exampleDir.mkdirs();
             String mainJava = "package com.example;\n\n" +
                 "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"Hello, World!\");\n" +
                 "    }\n" +
                 "}\n";
-            Files.write(srcPath.resolve("com/example/Main.java"), mainJava.getBytes());
+            writeFile(new File(exampleDir, "Main.java"), mainJava);
             
-            // Create pom.xml for Maven
-            String pomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
-                "         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                "         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0\n" +
-                "         http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
-                "    <modelVersion>4.0.0</modelVersion>\n\n" +
-                "    <groupId>com.example</groupId>\n" +
-                "    <artifactId>myproject</artifactId>\n" +
-                "    <version>1.0-SNAPSHOT</version>\n\n" +
-                "    <properties>\n" +
-                "        <maven.compiler.source>25</maven.compiler.source>\n" +
-                "        <maven.compiler.target>25</maven.compiler.target>\n" +
-                "        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n" +
-                "    </properties>\n" +
+            // Create build.xml for Ant
+            String buildXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<project name=\"myproject\" default=\"compile\" basedir=\".\">\n" +
+                "    <property name=\"src.dir\" value=\"src/main/java\"/>\n" +
+                "    <property name=\"build.dir\" value=\"build\"/>\n" +
+                "    <property name=\"classes.dir\" value=\"${build.dir}/classes\"/>\n" +
+                "    <property name=\"main-class\" value=\"com.example.Main\"/>\n" +
+                "    \n" +
+                "    <target name=\"clean\">\n" +
+                "        <delete dir=\"${build.dir}\"/>\n" +
+                "    </target>\n" +
+                "    \n" +
+                "    <target name=\"compile\" depends=\"clean\">\n" +
+                "        <mkdir dir=\"${classes.dir}\"/>\n" +
+                "        <javac srcdir=\"${src.dir}\" destdir=\"${classes.dir}\" \n" +
+                "               source=\"1.6\" target=\"1.6\" encoding=\"UTF-8\" includeantruntime=\"false\"/>\n" +
+                "    </target>\n" +
+                "    \n" +
+                "    <target name=\"run\" depends=\"compile\">\n" +
+                "        <java classname=\"${main-class}\" classpath=\"${classes.dir}\" fork=\"true\"/>\n" +
+                "    </target>\n" +
                 "</project>\n";
-            Files.write(Paths.get(path, "pom.xml"), pomXml.getBytes());
+            writeFile(new File(path, "build.xml"), buildXml);
             
             // Create README.md
             String readme = "# My Java Project\n\n" +
                 "A Java application.\n\n" +
                 "## Building\n\n" +
                 "```bash\n" +
-                "mvn compile\n" +
+                "ant compile\n" +
                 "```\n\n" +
                 "## Running\n\n" +
                 "```bash\n" +
-                "mvn exec:java -Dexec.mainClass=\"com.example.Main\"\n" +
+                "ant run\n" +
                 "```\n";
-            Files.write(Paths.get(path, "README.md"), readme.getBytes());
+            writeFile(new File(path, "README.md"), readme);
             
             showInfo("Project created successfully.");
         } catch (IOException e) {
@@ -585,13 +762,13 @@ public class JavaIDE extends JFrame {
         
         appendOutput("Building project...\n");
         
-        // Check for Maven
-        if (Files.exists(Paths.get(currentProjectPath, "pom.xml"))) {
-            runCommand(new String[]{"mvn", "compile"}, currentProjectPath);
+        // Check for Ant
+        if (new File(currentProjectPath, "build.xml").exists()) {
+            runCommand(new String[]{"ant", "compile"}, currentProjectPath);
         } else {
             appendOutput("No build system found. Using javac...\n");
             // Try to compile Java files
-            runCommand(new String[]{"javac", "-d", "target/classes", 
+            runCommand(new String[]{"javac", "-d", "build/classes", 
                 "src/main/java/**/*.java"}, currentProjectPath);
         }
     }
@@ -604,18 +781,17 @@ public class JavaIDE extends JFrame {
         
         appendOutput("Running application...\n");
         
-        // Check for Maven
-        if (Files.exists(Paths.get(currentProjectPath, "pom.xml"))) {
-            runCommand(new String[]{"mvn", "exec:java", 
-                "-Dexec.mainClass=com.example.Main"}, currentProjectPath);
+        // Check for Ant
+        if (new File(currentProjectPath, "build.xml").exists()) {
+            runCommand(new String[]{"ant", "run"}, currentProjectPath);
         } else {
             // Try to run Main class
             EditorTab tab = getCurrentTab();
             if (tab != null && tab.filepath != null && tab.filepath.endsWith(".java")) {
-                String className = Paths.get(tab.filepath).getFileName().toString()
-                    .replace(".java", "");
+                File file = new File(tab.filepath);
+                String className = file.getName().replace(".java", "");
                 runCommand(new String[]{"java", className}, 
-                    Paths.get(tab.filepath).getParent().toString());
+                    file.getParent());
             } else {
                 showError("No main class found. Please open a Java file with a main method.");
             }
@@ -631,10 +807,10 @@ public class JavaIDE extends JFrame {
         appendOutput("Cleaning build artifacts...\n");
         
         // Remove target directory
-        Path targetPath = Paths.get(currentProjectPath, "target");
-        if (Files.exists(targetPath)) {
+        File targetPath = new File(currentProjectPath, "target");
+        if (targetPath.exists()) {
             try {
-                deleteDirectory(targetPath.toFile());
+                deleteDirectory(targetPath);
                 appendOutput("Removed target/\n");
             } catch (IOException e) {
                 appendOutput("Error removing target/: " + e.getMessage() + "\n");
@@ -671,8 +847,11 @@ public class JavaIDE extends JFrame {
     }
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new JavaIDE().setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new JavaIDE().setVisible(true);
+            }
         });
     }
     
@@ -696,8 +875,8 @@ public class JavaIDE extends JFrame {
         
         @Override
         public String toString() {
-            Path p = Paths.get(path);
-            return isFile ? p.getFileName().toString() : p.getFileName().toString() + "/";
+            File f = new File(path);
+            return isFile ? f.getName() : f.getName() + "/";
         }
     }
 }

@@ -1,12 +1,12 @@
 # JavaIDE
 
-A modern Java IDE built with Swing and Java 25.
+A modern Java IDE built with Swing and Java 1.6.
 
 ## Features
 
 - **Code Editor**: Syntax highlighting for Java and other languages
 - **File Browser**: Navigate your project files with a tree view
-- **Build Support**: Integrated Maven and javac support
+- **Build Support**: Integrated Ant and javac support
 - **Run Support**: Run Java applications directly from the IDE
 - **Multiple Tabs**: Edit multiple files simultaneously
 - **Project Management**: Create new Java projects or open existing ones
@@ -14,19 +14,19 @@ A modern Java IDE built with Swing and Java 25.
 
 ## Requirements
 
-- Java 25 or later (JDK)
-- Maven 3.6+ (optional, for Maven projects)
+- Java 1.6 or later (JDK)
+- Apache Ant 1.8+ (optional, for Ant projects)
 - No external dependencies - uses only standard Java libraries
 
 ## Installation
 
 ### Building from Source
 
-#### Using Maven
+#### Using Ant
 
 ```bash
-mvn clean package
-java -jar target/javaide-1.0.0.jar
+ant jar
+java -jar build/jar/javaide.jar
 ```
 
 #### Using Gradle
@@ -40,59 +40,59 @@ java -jar target/javaide-1.0.0.jar
 
 ```bash
 make install
-java -jar target/javaide-1.0.0.jar
+java -jar build/jar/javaide.jar
 ```
 
 ### System Requirements
 
-- **Java 25 JDK**: Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.org/)
-- **Maven** (optional): Download from [Maven website](https://maven.apache.org/download.cgi)
+- **Java 1.6 JDK**: Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.org/)
+- **Apache Ant** (optional): Download from [Ant website](https://ant.apache.org/bindownload.cgi)
 
 ### Platform-Specific Installation
 
 #### Linux
 
 ```bash
-# Install Java 25
-sudo apt-get install openjdk-25-jdk  # Ubuntu/Debian
-sudo dnf install java-25-openjdk-devel  # Fedora/RHEL
-sudo pacman -S jdk-openjdk  # Arch Linux
+# Install Java 1.6 JDK (or later)
+sudo apt-get install openjdk-6-jdk  # Ubuntu/Debian
+sudo dnf install java-1.6.0-openjdk-devel  # Fedora/RHEL
+sudo pacman -S jdk6  # Arch Linux
 
-# Install Maven (optional)
-sudo apt-get install maven  # Ubuntu/Debian
-sudo dnf install maven  # Fedora/RHEL
+# Install Ant (optional)
+sudo apt-get install ant  # Ubuntu/Debian
+sudo dnf install ant  # Fedora/RHEL
 ```
 
 #### macOS
 
 ```bash
-# Install Java 25 using Homebrew
-brew install openjdk@25
+# Install Java 1.6 JDK (or later)
+# Note: Java 1.6 may require older versions or manual installation
 
-# Install Maven (optional)
-brew install maven
+# Install Ant (optional)
+brew install ant
 ```
 
 #### Windows
 
-1. Download and install Java 25 JDK from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [Adoptium](https://adoptium.net/)
-2. Download and install Maven from [Maven website](https://maven.apache.org/download.cgi)
-3. Add Java and Maven to your PATH environment variable
+1. Download and install Java 1.6 JDK from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [Adoptium](https://adoptium.net/)
+2. Download and install Apache Ant from [Ant website](https://ant.apache.org/bindownload.cgi)
+3. Add Java and Ant to your PATH environment variable
 
 ## Building
 
-### Using Maven
+### Using Ant
 
 ```bash
-mvn clean compile
-mvn exec:java -Dexec.mainClass="com.javaide.JavaIDE"
+ant compile
+ant run
 ```
 
 Or build a JAR:
 
 ```bash
-mvn clean package
-java -jar target/javaide-1.0.0.jar
+ant jar
+java -jar build/jar/javaide.jar
 ```
 
 ### Using Gradle
@@ -116,11 +116,11 @@ make install    # Build and show instructions
 After building, you can run the IDE:
 
 ```bash
-# Using Maven
-mvn exec:java -Dexec.mainClass="com.javaide.JavaIDE"
+# Using Ant
+ant run
 
 # Using the JAR
-java -jar target/javaide-1.0.0.jar
+java -jar build/jar/javaide.jar
 
 # Using Gradle
 ./gradlew run
@@ -130,56 +130,38 @@ java -jar target/javaide-1.0.0.jar
 
 ### Error: Java version not supported
 
-Make sure you have Java 25 installed:
+Make sure you have Java 1.6 or later installed:
 
 ```bash
 java -version
 ```
 
-Should show version 25 or higher. If not, install Java 25 JDK.
+Should show version 1.6 or higher. If not, install Java 1.6 JDK.
 
-### Error: Maven not found
+### Error: Ant not found
 
-Maven is optional but recommended for building Java projects. Install Maven:
+Ant is optional but recommended for building Java projects. Install Ant:
 
-- **Linux**: `sudo apt-get install maven` (Ubuntu/Debian) or `sudo dnf install maven` (Fedora)
-- **macOS**: `brew install maven`
-- **Windows**: Download from [Maven website](https://maven.apache.org/download.cgi)
+- **Linux**: `sudo apt-get install ant` (Ubuntu/Debian) or `sudo dnf install ant` (Fedora)
+- **macOS**: `brew install ant`
+- **Windows**: Download from [Ant website](https://ant.apache.org/bindownload.cgi)
 
 ### Error: Cannot find main class
 
 Make sure you're running from the project root directory and the classes are compiled:
 
 ```bash
-mvn clean compile
+ant compile
 ```
 
 ### Build errors
 
 If you encounter compilation errors, ensure:
 
-1. Java 25 JDK is installed and `JAVA_HOME` is set correctly
-2. Maven is using Java 25 (check with `mvn -version`)
+1. Java 1.6 JDK is installed and `JAVA_HOME` is set correctly
+2. Ant is using Java 1.6 (check with `ant -version`)
 3. All source files are in `src/main/java/com/javaide/`
 
-## Running
-
-```bash
-./valaide
-```
-
-Or if built with Meson:
-
-```bash
-./build/valaide
-```
-
-Or install it:
-
-```bash
-meson install -C build
-valaide
-```
 
 ## Usage
 
@@ -189,7 +171,7 @@ valaide
 2. Choose a directory for your project
 3. The IDE will create a basic Java project template with:
    - `src/main/java/com/example/Main.java` - Main application entry point
-   - `pom.xml` - Maven build configuration
+   - `build.xml` - Ant build configuration
    - `README.md` - Project documentation
 
 ### Opening a Project
@@ -205,7 +187,7 @@ valaide
 3. The build output will appear in the output panel
 
 The IDE supports:
-- **Maven projects**: Automatically detects `pom.xml` and uses `mvn compile`
+- **Ant projects**: Automatically detects `build.xml` and uses `ant compile`
 - **Plain Java projects**: Uses `javac` to compile Java files
 
 ### Running Your Application
@@ -214,9 +196,9 @@ The IDE supports:
 2. Go to **Build → Run** or click the run button in the toolbar
 3. The application will run and output will appear in the output panel
 
-For Maven projects, the IDE runs:
+For Ant projects, the IDE runs:
 ```bash
-mvn exec:java -Dexec.mainClass="com.example.Main"
+ant run
 ```
 
 ### Editing Files
@@ -259,7 +241,7 @@ myproject/
 │           └── com/
 │               └── example/
 │                   └── Main.java    # Main application entry point
-├── pom.xml                           # Maven build configuration
+├── build.xml                         # Ant build configuration
 └── README.md                          # Project documentation
 ```
 
@@ -275,7 +257,7 @@ This is a basic IDE implementation. Feel free to extend it with:
 - Advanced syntax highlighting for more languages
 - Code formatting
 - Refactoring tools
-- Maven/Gradle integration improvements
+- Ant/Gradle integration improvements
 
 ## License
 
