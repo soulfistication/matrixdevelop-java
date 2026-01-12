@@ -315,9 +315,7 @@ public class JavaIDE extends JFrame {
         toolbar.add(buildBtn);
         
         JButton runBtn = new JButton();
-        if (runBtn.getIcon() == null) {
-            runBtn.setText("Run");
-        }
+        runBtn.setIcon(createPlayIcon());
         runBtn.setToolTipText("Run");
         runBtn.addActionListener(new ActionListener() {
             @Override
@@ -853,6 +851,39 @@ public class JavaIDE extends JFrame {
                 new JavaIDE().setVisible(true);
             }
         });
+    }
+    
+    /**
+     * Creates a play icon (triangle pointing right) for the run button
+     */
+    private Icon createPlayIcon() {
+        return new Icon() {
+            @Override
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Draw play triangle
+                int size = getIconHeight();
+                int[] xPoints = {x + 2, x + 2, x + size - 2};
+                int[] yPoints = {y + 2, y + size - 2, y + size / 2};
+                
+                g2d.setColor(c.isEnabled() ? Color.BLACK : Color.GRAY);
+                g2d.fillPolygon(xPoints, yPoints, 3);
+                
+                g2d.dispose();
+            }
+            
+            @Override
+            public int getIconWidth() {
+                return 16;
+            }
+            
+            @Override
+            public int getIconHeight() {
+                return 16;
+            }
+        };
     }
     
     // Helper class for file tree

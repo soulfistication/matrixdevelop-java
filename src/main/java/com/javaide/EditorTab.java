@@ -3,6 +3,7 @@ package com.javaide;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JOptionPane;
+import javax.swing.JComponent;
 import javax.swing.undo.UndoManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,6 +14,10 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.FontMetrics;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -70,10 +75,14 @@ public class EditorTab {
             applySyntaxHighlighting();
         }
         
+        // Create line number component
+        LineNumberComponent lineNumbers = new LineNumberComponent(textPane);
+        
         // Create scrolled pane
         scrollPane = new JScrollPane(textPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setRowHeaderView(lineNumbers);
     }
     
     private void setText(String text) {
@@ -264,6 +273,103 @@ public class EditorTab {
             else end += 2;
             document.setCharacterAttributes(pos, end - pos, style, false);
             pos = end;
+        }
+    }
+    
+    /**
+     * Line number component that displays line numbers for the text editor
+     */
+    private static class LineNumberComponent extends JComponent {
+        private JTextPane textPane;
+        private Font font;
+        
+        public LineNumberComponent(JTextPane textPane) {
+            this.textPane = textPane;
+            this.font = textPane.getFont();
+            setFont(font);
+            setBackground(new Color(240, 240, 240));
+            setForeground(new Color(100, 100, 100));
+            
+            // Update line numbers when document changes
+            textPane.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    repaint();
+                    revalidate();
+                }
+                
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    repaint();
+                    revalidate();
+                }
+                
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    repaint();
+                    revalidate();
+                }
+            });
+            
+            // Update line numbers when scrolling
+            textPane.addCaretListener(e -> repaint());
+        }
+        
+        @Override
+        public Dimension getPreferredSize() {
+            try {
+                StyledDocument doc = (StyledDocument) textPane.getDocument();
+                int lineCount = doc.getDefaultRootElement().getElementCount();
+                FontMetrics fm = getFontMetrics(font);
+                int width = fm.stringWidth(String.valueOf(lineCount)) + 10;
+                return new Dimension(Math.max(40, width), textPane.getHeight());
+            } catch (Exception e) {
+                return new Dimension(40, textPane.getHeight());
+            }
+        }
+        
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            
+            Rectangle clip = g.getClipBounds();
+            if (clip == null) {
+                clip = new Rectangle(0, 0, getWidth(), getHeight());
+            }
+            
+            FontMetrics fm = g.getFontMetrics();
+            int fontHeight = fm.getHeight();
+            int fontAscent = fm.getAscent();
+            
+            StyledDocument doc = (StyledDocument) textPane.getDocument();
+            javax.swing.text.Element root = doc.getDefaultRootElement();
+            int totalLines = root.getElementCount();
+            
+            // Calculate visible line range based on scroll position
+            int startY = clip.y;
+            int endY = clip.y + clip.height;
+            
+            int startLine = Math.max(0, startY / fontHeight);
+            int endLine = Math.min(totalLines - 1, (endY / fontHeight) + 1);
+            
+            // Draw line numbers
+            for (int line = startLine; line <= endLine && line < totalLines; line++) {
+                try {
+                    // Calculate Y position based on line number
+                    int y = (line * fontHeight) + fontAscent;
+                    
+                    // Only draw if within visible area
+                    if (y >= clip.y - fontHeight && y <= clip.y + clip.height) {
+                        String lineNumber = String.valueOf(line + 1);
+                        int x = getWidth() - fm.stringWidth(lineNumber) - 5;
+                        
+                        g.setColor(getForeground());
+                        g.drawString(lineNumber, x, y);
+                    }
+                } catch (Exception e) {
+                    // Ignore
+                }
+            }
         }
     }
 }
